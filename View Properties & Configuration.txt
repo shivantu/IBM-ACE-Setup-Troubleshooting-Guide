@@ -1,0 +1,9 @@
+
+# Node full configuration (all properties)
+mqsireportproperties myNode -o AllReportableEntityNames -r
+
+# Integration Server properties
+mqsireportproperties myNode -e APP_SERVER -o Server -r
+
+# Environment variables inside Node context
+mqsireportproperties myNode -o BrokerRegistry -r
