@@ -1,0 +1,8 @@
+# Create Node linked to a local Queue Manager
+mqsicreatebroker myNode -q QMGR1
+
+# Verify MQ connectivity status
+mqsi_getqmgrstatus myNode
+
+# Set MQ connection authentication (if MCAUSER or CHLAUTH used)
+mqsisetdbparms myNode -n mq::QMGR1 -u mqm -p mqpass
