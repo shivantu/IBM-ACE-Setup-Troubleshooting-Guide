@@ -13,3 +13,14 @@ mqsistop myNode
 
 # Delete Integration Node
 mqsiremovebroker myNode
+
+=============================
+
+# Create an Integration Server under Node
+mqsicreateexecutiongroup myNode -e APP_SERVER
+
+# Restart Integration Server
+mqsireload myNode -e APP_SERVER
+
+# List all Integration Servers
+mqsilist myNode
