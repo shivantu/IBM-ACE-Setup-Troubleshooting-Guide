@@ -1,0 +1,80 @@
+,,,bash
+🚦 NODE / INTEGRATION SERVER ISSUES
+• Node not starting ➜ mqsichkbroker && mqsistart -i <IntegrationNode>
+  → Check logs: /var/mqsi/common/errors/*.log
+  → Fix missing MQ installation or wrong permissions
+
+• Integration Server stuck / not visible
+  ➜ mqsilist <NodeName>
+  ➜ mqsistopmsgflow <NodeName> -e <IS> -m <Flow> (if hanging flow)
+  ➜ Restart server: mqsistop -e <IS> && mqsistartmsgflow -e <IS>
+
+• Port conflict (workload port busy)
+  ➜ netstat -tulpn | grep <port>
+  ➜ Update port: mqsichangeproperties <Node> -e <IS> -o HTTPConnector -n port -v <newPort>
+
+📦 APPLICATION DEPLOYMENT ISSUES
+• BAR file deploy failure
+  ➜ ibmint deploy --input-bar <BAR> --integration-server <IS> --verbose
+  ➜ Check ACE logs: mqsireadlog <Node> -e <IS> -o csv > error.csv
+  → Validate policies & MQ credentials before redeploy
+
+• Flow not executing
+  ➜ mqsireportproperties <Node> -e <IS> -o ExecutionGroup -r
+  ➜ Check if flow is stopped: mqsistopmsgflow / mqsistartmsgflow
+
+📬 MQ CONNECTIVITY FAILURES
+• MQRC 2035 (Not Authorized)
+  ➜ setmqaut -m <QM> -t q -n <Queue> -p mqm +put +get +inq
+  ➜ Ensure mqm user exists on ACE host
+
+• MQ Queue Manager not found
+  ➜ dspmq
+  ➜ strmqm <QM>
+  ➜ Verify CCDT / connection policy in ACE
+
+• SSL handshake failure
+  ➜ Check keystore:
+      runmqakm -cert -list -db key.kdb
+  ➜ mqsichangeproperties <Node> -e <IS> -o MQEndpoint -n sslPeerName -v "<DN>"
+  ➜ Sync cipher spec with MQ channel
+
+🔐 SECURITY / LDAP ISSUES
+• LDAP Authentication failing
+  ➜ mqsireportproperties <Node> -o SecurityProfiles -r
+  ➜ Test LDAP: ldapsearch -x -H ldap://<server> -b "<baseDN>"
+  ➜ Correct credentials, cert chain, mapping
+
+🧠 PERFORMANCE / MEMORY ISSUES
+• High CPU or memory leak
+  ➜ mqsireportproperties -o ResourceStats -r
+  ➜ mqsichangeproperties <Node> -e <IS> -o ExecutionGroup -n resourceManagers -v <value>
+  ➜ Restart only the impacted IS:
+      mqsistopmsgflow && mqsistartmsgflow (target specific flows)
+
+• Too many connections / stuck threads
+  ➜ mqsireportproperties <Node> -o HTTPConnector -r
+  ➜ Increase maxThreads if required
+
+🔌 DATABASE CONNECTIVITY FAILURES
+• ODBC / JDBC error
+  ➜ mqsisetdbparms <Node> -n <ResourceName> -u user -p pass
+  ➜ Confirm DSN: odbcinst -q -s
+  ➜ Test DB connection using external CLI tool
+
+📝 LOGS / DEBUG COMMANDS
+• View last deployment errors immediately
+  ➜ mqsireadlog <Node> -a -e <IS> | mqsiformatlog
+
+• Enable detailed trace
+  ➜ mqsichangetrace <Node> -e <IS> -l debug
+  ➜ mqsicollecttrace <Node> -e <IS>
+  ➜ Disable: mqsichangetrace <Node> -e <IS> -l none
+
+🧯 QUICK RESET ACTIONS
+• Restart only faulty component
+  ➜ mqsistopmsgflow <Node> -e <IS>
+  ➜ mqsistartmsgflow <Node> -e <IS>
+
+• Full node reset (last option)
+  ➜ mqsistop <Node> && mqsistart <Node>
