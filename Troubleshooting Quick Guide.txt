@@ -1,4 +1,3 @@
-,,,bash
 🚦 NODE / INTEGRATION SERVER ISSUES
 • Node not starting ➜ mqsichkbroker && mqsistart -i <IntegrationNode>
   → Check logs: /var/mqsi/common/errors/*.log
