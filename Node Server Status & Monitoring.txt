@@ -1,0 +1,9 @@
+# Node status
+mqsireportbroker myNode -a
+
+# Integration Server status
+mqsireportproperties myNode -e APP_SERVER -o ExecutionGroup
+
+# Check deployed resources running status
+mqsistopmsgflow myNode -e APP_SERVER -m All
+mqsistartmsgflow myNode -e APP_SERVER -m All
