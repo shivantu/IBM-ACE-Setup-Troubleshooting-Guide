@@ -1,0 +1,15 @@
+
+# Create Work Directory
+mqsicreateworkdir /var/ace/myNode
+
+# Create Integration Node
+mqsicreatebroker myNode
+
+# Start Integration Node
+mqsistart myNode
+
+# Stop Integration Node
+mqsistop myNode
+
+# Delete Integration Node
+mqsiremovebroker myNode
