@@ -1,0 +1,12 @@
+
+# Deploy BAR file to Integration Server
+mqsideploy myNode -e APP_SERVER -a MyApp.bar
+
+# Force deploy (overwrite existing)
+mqsideploy myNode -e APP_SERVER -a MyApp.bar -m
+
+# Undeploy Application
+mqsiundeploy myNode -e APP_SERVER -a MyApp
+
+# Check Deployment Status
+mqsireportproperties myNode -e APP_SERVER -o AllReportableEntityNames
