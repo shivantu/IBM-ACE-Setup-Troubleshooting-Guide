@@ -3,6 +3,9 @@
 This repository contains installation steps, configuration tips, and troubleshooting solutions for IBM App Connect Enterprise (ACE) running on Linux environments.
 
 ---
+© 2025 Shivaraj — All Rights Reserved.  
+
+---
 
 ## 📦 What’s Inside?
 
@@ -46,3 +49,11 @@ cd ace-13.0.4.0
 
 # 5. (Optional) Create work directory
 # For shared install, a registry is created in /var/mqsi (default)
+```
+
+## 📞 Contact
+- shivaraj
+- shivantu9@gmail.com
+- For questions or contributions, please reach out via GitHub issues.
+
+---
