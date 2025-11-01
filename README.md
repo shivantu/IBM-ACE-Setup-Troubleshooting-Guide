@@ -20,7 +20,7 @@ This repository contains installation steps, configuration tips, and troubleshoo
 
 ---
 
-## ✅ IBM ACE Linux Installation (Latest Version)
+## ✅ IBM ACE Installation (Latest Version)
 
 ### Steps Summary
 ```bash
